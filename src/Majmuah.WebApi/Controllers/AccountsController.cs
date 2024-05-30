@@ -4,7 +4,7 @@ using Majmuah.WebApi.Models.Commons;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Arcana.WebApi.Controllers;
+namespace Majmuah.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

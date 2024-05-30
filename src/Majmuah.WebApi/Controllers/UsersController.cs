@@ -5,7 +5,7 @@ using Majmuah.WebApi.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Arcana.WebApi.Controllers;
+namespace Majmuah.WebApi.Controllers;
 
 public class UsersController(IUserApiService userApiService) : BaseController
 {

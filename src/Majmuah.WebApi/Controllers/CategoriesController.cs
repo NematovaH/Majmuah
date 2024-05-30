@@ -1,32 +1,33 @@
-﻿using Majmuah.Service.Configurations;
-using Majmuah.WebApi.ApiServices.Permissions;
+﻿using Arcana.WebApi.Controllers;
+using Majmuah.Service.Configurations;
+using Majmuah.WebApi.ApiServices.Categories;
+using Majmuah.WebApi.Models.Categories;
 using Majmuah.WebApi.Models.Commons;
-using Majmuah.WebApi.Models.Permissions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
-public class PermissionsController(IPermissionApiService permissionApiService) : BaseController
+public class CategoriesController(ICategoryApiService categoryApiService) : BaseController
 {
     [HttpPost]
-    public async ValueTask<IActionResult> PostAsync(PermissionCreateModel createModel)
+    public async ValueTask<IActionResult> PostAsync(CategoryCreateModel createModel)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await permissionApiService.PostAsync(createModel)
+            Data = await categoryApiService.PostAsync(createModel)
         });
     }
 
     [HttpPut("{id:long}")]
-    public async ValueTask<IActionResult> PutAsync(long id, PermissionUpdateModel updateModel)
+    public async ValueTask<IActionResult> PutAsync(long id, CategoryUpdateModel updateModel)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await permissionApiService.PutAsync(id, updateModel)
+            Data = await categoryApiService.PutAsync(id, updateModel)
         });
     }
 
@@ -37,7 +38,7 @@ public class PermissionsController(IPermissionApiService permissionApiService) :
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await permissionApiService.DeleteAsync(id)
+            Data = await categoryApiService.DeleteAsync(id)
         });
     }
 
@@ -48,7 +49,7 @@ public class PermissionsController(IPermissionApiService permissionApiService) :
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await permissionApiService.GetAsync(id)
+            Data = await categoryApiService.GetAsync(id)
         });
     }
 
@@ -62,7 +63,7 @@ public class PermissionsController(IPermissionApiService permissionApiService) :
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await permissionApiService.GetAsync(@params, filter, search)
+            Data = await categoryApiService.GetAsync(@params, filter, search)
         });
     }
 }

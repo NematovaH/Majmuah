@@ -1,7 +1,7 @@
 ﻿using Majmuah.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Arcana.WebApi.Controllers;
+namespace Majmuah.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

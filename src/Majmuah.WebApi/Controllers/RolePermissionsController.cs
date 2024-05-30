@@ -4,7 +4,7 @@ using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.RolePermissions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Arcana.WebApi.Controllers;
+namespace Majmuah.WebApi.Controllers;
 
 public class RolePermissionsController(IRolePermissionApiService rolePermissionService) : BaseController
 {
