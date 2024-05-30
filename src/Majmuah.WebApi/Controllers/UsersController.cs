@@ -1,7 +1,7 @@
-﻿using Arcana.Service.Configurations;
-using Arcana.WebApi.ApiServices.Users;
-using Arcana.WebApi.Models.Commons;
-using Arcana.WebApi.Models.Users;
+﻿using Majmuah.Service.Configurations;
+using Majmuah.WebApi.ApiServices.Users;
+using Majmuah.WebApi.Models.Commons;
+using Majmuah.WebApi.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
