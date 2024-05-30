@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  majmuah.webapi:
+    image: ${DOCKER_REGISTRY-}majmuahwebapi
+    build:
+      context: .
+      dockerfile: src/Majmuah.WebApi/Dockerfile
