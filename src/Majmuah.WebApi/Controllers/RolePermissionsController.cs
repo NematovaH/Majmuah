@@ -1,7 +1,7 @@
-﻿using Arcana.Service.Configurations;
-using Arcana.WebApi.ApiServices.RolePermissions;
-using Arcana.WebApi.Models.Commons;
-using Arcana.WebApi.Models.RolePermissions;
+﻿using Majmuah.Service.Configurations;
+using Majmuah.WebApi.ApiServices.RolePermissions;
+using Majmuah.WebApi.Models.Commons;
+using Majmuah.WebApi.Models.RolePermissions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arcana.WebApi.Controllers;
