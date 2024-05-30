@@ -1,5 +1,4 @@
-﻿using Arcana.WebApi.Controllers;
-using Majmuah.Service.Configurations;
+﻿using Majmuah.Service.Configurations;
 using Majmuah.WebApi.ApiServices.Fields;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Fields;
@@ -19,7 +18,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
             Data = await fieldApiService.PostAsync(createModel)
         });
     }
-    
+
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, FieldUpdateModel updateModel)
     {
@@ -30,7 +29,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
             Data = await fieldApiService.PutAsync(id, updateModel)
         });
     }
-    
+
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {
@@ -41,7 +40,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
             Data = await fieldApiService.DeleteAsync(id)
         });
     }
-    
+
     [HttpGet("{id:long}")]
     public async ValueTask<IActionResult> GetAsync(long id)
     {
@@ -52,7 +51,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
             Data = await fieldApiService.GetAsync(id)
         });
     }
-    
+
     [HttpGet]
     public async ValueTask<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams @params,
