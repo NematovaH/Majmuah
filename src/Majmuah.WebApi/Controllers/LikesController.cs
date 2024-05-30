@@ -1,5 +1,4 @@
-﻿using Majmuah.Service.Configurations;
-using Majmuah.WebApi.ApiServices.Likes;
+﻿using Majmuah.WebApi.ApiServices.Likes;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Likes;
 using Microsoft.AspNetCore.Mvc;

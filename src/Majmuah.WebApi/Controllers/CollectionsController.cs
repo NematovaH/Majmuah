@@ -1,5 +1,4 @@
-﻿using Arcana.WebApi.Controllers;
-using Majmuah.Service.Configurations;
+﻿using Majmuah.Service.Configurations;
 using Majmuah.WebApi.ApiServices.Collections;
 using Majmuah.WebApi.Models.Collections;
 using Majmuah.WebApi.Models.Commons;
