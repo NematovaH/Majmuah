@@ -5,82 +5,120 @@ using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
-namespace Majmuah.WebApi.Controllers;
-
-public class UsersController(IUserApiService userApiService) : BaseController
+namespace Majmuah.WebApi.Controllers
 {
-    [HttpPost]
-    [AllowAnonymous]
-    public async ValueTask<IActionResult> PostAsync(UserCreateModel createModel)
+    public class UsersController(IUserApiService userApiService) : BaseController
     {
-        return Ok(new Response
+        [AllowAnonymous]
+        [HttpPost("admin")]
+        public async ValueTask<IActionResult> PostAdminAsync(UserCreateModel createModel)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.PostAdminAsync(createModel)
-        });
-    }
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.PostAdminAsync(createModel)
+            });
+        }
+        
+        [AllowAnonymous]
+        [HttpPost]
+        public async ValueTask<IActionResult> PostAsync(UserCreateModel createModel)
+        {
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.PostUserAsync(createModel)
+            });
+        }
 
-    [HttpPut("{id:long}")]
-    [Authorize("UserRole.Admin")]
-    public async ValueTask<IActionResult> PutAsync(long id, UserUpdateModel updateModel)
-    {
-        return Ok(new Response
+        [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
+        [HttpPut("{id:long}")]
+        public async ValueTask<IActionResult> PutAsync(long id, UserUpdateModel updateModel)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.PutAsync(id, updateModel)
-        });
-    }
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.PutAsync(id, updateModel)
+            });
+        }
 
-    [HttpDelete("{id:long}")]
-    public async ValueTask<IActionResult> DeleteAsync(long id)
-    {
-        return Ok(new Response
+        [CustomAuthorize(nameof(UserRole.Admin))]
+        [HttpPut("changeStatus/{id:long}")]
+        public async ValueTask<IActionResult> PutAsync(long id)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.DeleteAsync(id)
-        });
-    }
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.ChangeUserStatusAsync(id)
+            });
+        }
 
-    [HttpGet("{id:long}")]
-    [AllowAnonymous]
-    public async ValueTask<IActionResult> GetAsync(long id)
-    {
-        return Ok(new Response
+        [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
+        [HttpDelete("{id:long}")]
+        public async ValueTask<IActionResult> DeleteAsync(long id)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.GetAsync(id)
-        });
-    }
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.DeleteAsync(id)
+            });
+        }
 
-    [HttpGet]
-    [AllowAnonymous]
-    public async ValueTask<IActionResult> GetAllAsync(
-        [FromQuery] PaginationParams @params,
-        [FromQuery] Filter filter,
-        [FromQuery] string search = null)
-    {
-        return Ok(new Response
+        [HttpGet("{id:long}")]
+        [AllowAnonymous]
+        public async ValueTask<IActionResult> GetAsync(long id)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.GetAsync(@params, filter, search)
-        });
-    }
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.GetAsync(id)
+            });
+        }
 
-    [HttpPatch("change-password")]
-    public async ValueTask<IActionResult> ChangePasswordAsync([FromQuery] UserChangePasswordModel userChangePasswordModel)
-    {
-        return Ok(new Response
+        [HttpGet]
+        [AllowAnonymous]
+        public async ValueTask<IActionResult> GetAllAsync(
+            [FromQuery] PaginationParams @params,
+            [FromQuery] Filter filter,
+            [FromQuery] string search = null)
         {
-            StatusCode = 200,
-            Message = "Ok",
-            Data = await userApiService.ChangePasswordAsync(userChangePasswordModel)
-        });
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.GetAsync(@params, filter, search)
+            });
+        }
+
+        [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
+        [HttpPatch("change-password")]
+        public async ValueTask<IActionResult> ChangePasswordAsync([FromQuery] UserChangePasswordModel userChangePasswordModel)
+        {
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.ChangePasswordAsync(userChangePasswordModel)
+            });
+        }
+
+        [CustomAuthorize(nameof(UserRole.Admin))]
+        [HttpPatch("remove-adminRole")]
+        public async ValueTask<IActionResult> RemoveAdminRoleAsync()
+        {
+            return Ok(new Response
+            {
+                StatusCode = 200,
+                Message = "Ok",
+                Data = await userApiService.RemoveAdminRoleAsync()
+            });
+        }
     }
 }

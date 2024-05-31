@@ -13,9 +13,8 @@ public class User : Auditable
     public string Email { get; set; }
     public string PasswordHash { get; set; }
     public string Phone {  get; set; }
-    public long RoleId { get; set; }
     public UserRole UserRole { get; set; }
-    public bool IsBlocked { get; set; }
+    public bool IsBlocked { get; set; } = false;
     public IEnumerable<Collection> Collections { get; set; }
     public IEnumerable<Like> Likes { get; set; }
     public IEnumerable<Comment> Comments { get; set; } 

@@ -125,13 +125,7 @@ public static class ServicesCollection
         services.AddExceptionHandler<InternalServerExceptionHandler>();
     }
 
-    public static void AddInjectHelper(this WebApplication serviceProvider)
-    {
-        var scope = serviceProvider.Services.CreateScope();
-        InjectHelper.RolePermissionService = scope.ServiceProvider.GetRequiredService<IRolePermissionService>();
-    }
-
-    public static void InjectEnvironmentItems(this WebApplication app)
+    public static void AddInjectEnvironmentItems(this WebApplication app)
     {
         HttpContextHelper.ContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
         EnvironmentHelper.WebRootPath = Path.GetFullPath("wwwroot");

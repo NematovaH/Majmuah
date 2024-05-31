@@ -9,12 +9,20 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(options => 
+builder.Services.AddControllers(options =>
     options.Conventions.Add(new RouteTokenTransformerConvention(new RouteHelper())));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 
-builder.Services.AddDbContext<AppDbContext>(options => 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        {
+            builder.WithOrigins("https://majmuah-latest.onrender.com", "http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
+        });
+});
+
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultDbConnection")));
 
 builder.Host.UseSerilog((context, configuration) =>
@@ -23,6 +31,7 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddJwtService(builder.Configuration);
 builder.Services.AddExceptionHandlers();
 builder.Services.AddProblemDetails();
+builder.Services.AddAuthorization();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
@@ -39,15 +48,18 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 
 var app = builder.Build();
-app.AddInjectHelper();
-app.InjectEnvironmentItems();
+app.AddInjectEnvironmentItems();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
+app.AddInjectEnvironmentItems();
+app.UseStaticFiles();
 
+app.UseRouting();
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthorization();
 
 app.MapControllers();

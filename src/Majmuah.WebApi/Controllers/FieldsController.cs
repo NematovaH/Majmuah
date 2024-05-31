@@ -1,13 +1,16 @@
-﻿using Majmuah.Service.Configurations;
+﻿using Majmuah.Domain.Enums;
+using Majmuah.Service.Configurations;
 using Majmuah.WebApi.ApiServices.Fields;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Fields;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
 public class FieldsController(IFieldApiService fieldApiService) : BaseController
 {
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(FieldCreateModel createModel)
     {
@@ -19,6 +22,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
         });
     }
 
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, FieldUpdateModel updateModel)
     {
@@ -30,6 +34,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
         });
     }
 
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {
@@ -41,6 +46,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
         });
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:long}")]
     public async ValueTask<IActionResult> GetAsync(long id)
     {
@@ -52,6 +58,7 @@ public class FieldsController(IFieldApiService fieldApiService) : BaseController
         });
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async ValueTask<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams @params,

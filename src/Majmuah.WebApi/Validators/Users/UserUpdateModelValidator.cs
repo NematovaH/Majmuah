@@ -12,6 +12,10 @@ public class UserUpdateModelValidator : AbstractValidator<UserUpdateModel>
             .NotNull()
             .WithMessage(user => $"{nameof(user.FirstName)} is not specified");
 
+        RuleFor(user => user.LastName)
+            .NotNull()
+            .WithMessage(user => $"{nameof(user.FirstName)} is not specified");
+
         RuleFor(user => user.Phone)
             .NotNull()
             .WithMessage(user => $"{nameof(user.Phone)} is not specified");

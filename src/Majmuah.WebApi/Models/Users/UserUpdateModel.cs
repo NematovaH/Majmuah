@@ -1,4 +1,6 @@
-﻿namespace Majmuah.WebApi.Models.Users;
+﻿using Majmuah.Domain.Enums;
+
+namespace Majmuah.WebApi.Models.Users;
 
 public class UserUpdateModel
 {
@@ -7,4 +9,6 @@ public class UserUpdateModel
     public string Email { get; set; }
     public string Phone { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public bool IsBlocked { get; set; }
+
 }

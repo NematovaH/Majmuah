@@ -31,13 +31,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -49,7 +49,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -74,13 +74,13 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -95,7 +95,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -126,13 +126,13 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -147,10 +147,10 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Time")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -178,13 +178,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -199,7 +199,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -212,7 +212,7 @@ namespace Majmuah.DataAccess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 5, 29, 20, 36, 34, 23, DateTimeKind.Utc).AddTicks(5219),
+                            CreatedAt = new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2052),
                             CreatedByUserId = 0L,
                             IsDeleted = false,
                             Name = "Picture",
@@ -221,7 +221,7 @@ namespace Majmuah.DataAccess.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 5, 29, 20, 36, 34, 23, DateTimeKind.Utc).AddTicks(5221),
+                            CreatedAt = new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2064),
                             CreatedByUserId = 0L,
                             IsDeleted = false,
                             Name = "Picture2",
@@ -241,13 +241,13 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -258,11 +258,8 @@ namespace Majmuah.DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -283,13 +280,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -304,7 +301,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -333,13 +330,13 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -351,7 +348,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -372,13 +369,13 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -390,7 +387,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -411,13 +408,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -429,7 +426,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -455,13 +452,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -473,7 +470,7 @@ namespace Majmuah.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
@@ -481,95 +478,6 @@ namespace Majmuah.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.Permission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Action")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Controller")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("CreatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("DeletedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("UpdatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.RolePermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("CreatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("DeletedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("UpdatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("UserRoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserRoleId");
-
-                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Majmuah.Domain.Entities.Users.User", b =>
@@ -581,13 +489,13 @@ namespace Majmuah.DataAccess.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("CreatedByUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
@@ -613,57 +521,18 @@ namespace Majmuah.DataAccess.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("text");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long?>("UpdatedByUserId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.Property<int>("UserRole")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("RoleId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.UserRole", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("CreatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("DeletedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("UpdatedByUserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Majmuah.Domain.Entities.Collections.Collection", b =>
@@ -795,40 +664,6 @@ namespace Majmuah.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.RolePermission", b =>
-                {
-                    b.HasOne("Majmuah.Domain.Entities.Users.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Majmuah.Domain.Entities.Users.UserRole", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Majmuah.Domain.Entities.Users.UserRole", null)
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("UserRoleId");
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.User", b =>
-                {
-                    b.HasOne("Majmuah.Domain.Entities.Users.UserRole", "UserRole")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserRole");
-                });
-
             modelBuilder.Entity("Majmuah.Domain.Entities.Categories.Category", b =>
                 {
                     b.Navigation("Collections");
@@ -869,13 +704,6 @@ namespace Majmuah.DataAccess.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
-                });
-
-            modelBuilder.Entity("Majmuah.Domain.Entities.Users.UserRole", b =>
-                {
-                    b.Navigation("RolePermissions");
-
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

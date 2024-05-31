@@ -1,4 +1,6 @@
-﻿namespace Majmuah.WebApi.Models.Users;
+﻿using Majmuah.Domain.Enums;
+
+namespace Majmuah.WebApi.Models.Users;
 
 public class UserCreateModel
 {
@@ -6,6 +8,8 @@ public class UserCreateModel
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
-    public string Password { get; set; }
+    public bool IsBlocked { get; set; }
+    public UserRole UserRole {  get; set; }
+    public string PasswordHash { get; set; }
     public DateTime DateOfBirth { get; set; }
 }

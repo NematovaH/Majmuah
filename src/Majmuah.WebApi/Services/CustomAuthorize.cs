@@ -1,20 +1,18 @@
-﻿using Majmuah.Service.Exceptions;
-using Majmuah.Service.Services.RolePermissions;
-using Majmuah.WebApi.Helpers;
-using Majmuah.WebApi.Models.Commons;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-
-namespace Majmuah.WebApi.Services;
+using Majmuah.Domain.Enums;
+using Majmuah.Service.Exceptions;
+using Majmuah.WebApi.Models.Commons;
 
 public class CustomAuthorize : Attribute, IAuthorizationFilter
 {
-    private readonly IRolePermissionService rolePermissionService;
-    public CustomAuthorize()
+    private readonly string[] _roles;
+
+    public CustomAuthorize(params string[] roles)
     {
-        rolePermissionService = InjectHelper.RolePermissionService;
+        _roles = roles;
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)
@@ -25,18 +23,8 @@ public class CustomAuthorize : Attribute, IAuthorizationFilter
                 .OfType<AllowAnonymousAttribute>().Any() ?? false;
         if (allowAnonymous) return;
 
-        string authorizationHeader = context.HttpContext.Request.Headers["Authorization"];
-        if (string.IsNullOrEmpty(authorizationHeader))
-        {
-            SetStatusCodeResult(context);
-            return;
-        }
-
-        var action = actionDescriptor.ActionName;
-        var controller = actionDescriptor.ControllerName;
-        var role = context.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-        if (!rolePermissionService.CheckRolePermission(role, $"{action}Async", controller))
+        var user = context.HttpContext.User;
+        if (!user.Identity.IsAuthenticated || !_roles.Any(user.IsInRole))
         {
             SetStatusCodeResult(context);
             return;
@@ -54,5 +42,11 @@ public class CustomAuthorize : Attribute, IAuthorizationFilter
         {
             StatusCode = StatusCodes.Status403Forbidden
         };
+    }
+
+    public bool IsUserAdmin(ClaimsPrincipal user)
+    {
+        var roleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+        return user.Claims.Any(c => c.Type == roleClaimType && c.Value == nameof(UserRole.Admin));
     }
 }
