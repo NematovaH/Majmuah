@@ -4,11 +4,13 @@ using Majmuah.Service.Configurations;
 using Majmuah.Service.Exceptions;
 using Majmuah.Service.Extensions;
 using Majmuah.Service.Helpers;
+using Majmuah.Service.Services.Assets;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Majmuah.Service.Services.Collections;
 
-public class CollectionService(IUnitOfWork unitOfWork) : ICollectionService
+public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetService) : ICollectionService
 {
     public async ValueTask<Collection> CreateAsync(Collection collection)
     {
@@ -73,5 +75,43 @@ public class CollectionService(IUnitOfWork unitOfWork) : ICollectionService
             collections = collections.Where(c => c.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
 
         return await collections.ToPaginateAsQueryable(@params).ToListAsync();
+    }
+
+    public async ValueTask<Collection> UploadFileAsync(long id, IFormFile file)
+    {
+        await unitOfWork.BeginTransactionAsync();
+
+        var existCollection = await unitOfWork.Collections
+            .SelectAsync(c => c.Id == id && !c.IsDeleted, includes: ["User", "Category", "Asset", "Items", "Fields"])
+            ?? throw new NotFoundException($"Collection is not found with this ID={id}");
+
+        var createdFile = await assetService.UploadAsync(file, FileType.Pictures);
+
+        existCollection.Asset = createdFile;
+        existCollection.AssetId = createdFile.Id;
+        existCollection.UpdatedByUserId = HttpContextHelper.UserId;
+        await unitOfWork.Collections.UpdateAsync(existCollection);
+        await unitOfWork.SaveAsync();
+        await unitOfWork.CommitTransactionAsync();
+
+        return existCollection;
+    }
+
+    public async ValueTask<Collection> DeleteFileAsync(long id)
+    {
+        await unitOfWork.BeginTransactionAsync();
+
+        var existQuestion = await unitOfWork.Collections
+            .SelectAsync(question => question.Id == id && !question.IsDeleted, includes: ["File", "Module"])
+            ?? throw new NotFoundException($"Question is not found with this ID={id}");
+
+        await assetService.DeleteAsync(Convert.ToInt64(existQuestion.AssetId));
+
+        existQuestion.AssetId = null;
+        await unitOfWork.Collections.UpdateAsync(existQuestion);
+        await unitOfWork.SaveAsync();
+        await unitOfWork.CommitTransactionAsync();
+
+        return existQuestion;
     }
 }

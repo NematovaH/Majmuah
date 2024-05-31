@@ -6,16 +6,12 @@ public static class ValidationHelper
 {
     public static bool IsPasswordHard(string password)
     {
-        // Check if the password is at least 8 characters long
         if (password.Length < 8) return false;
 
-        // Check if the password contains at least one uppercase letter
         if (!password.Any(char.IsUpper)) return false;
 
-        // Check if the password contains at least one lowercase letter
         if (!password.Any(char.IsLower)) return false;
 
-        // Check if the password contains at least one digit
         if (!password.Any(char.IsDigit)) return false;
 
         return true;

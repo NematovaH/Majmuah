@@ -20,7 +20,7 @@ public class RolePermissionService(IUnitOfWork unitOfWork) : IRolePermissionServ
 
         var existRolePermission = await unitOfWork.RolePermissions
             .SelectAsync(rp =>
-                rp.PermissionId == rolePermission.PermissionId && rp.RoleId == rolePermission.RoleId && !rp.IsDeleted);
+                rp.PermissionId == rolePermission.PermissionId && rp.RoleId == rolePermission.RoleId);
 
         if (existRolePermission is not null)
             throw new AlreadyExistException($"Role permission is already exists" +
@@ -38,7 +38,7 @@ public class RolePermissionService(IUnitOfWork unitOfWork) : IRolePermissionServ
 
     public async ValueTask<bool> DeleteAsync(long id)
     {
-        var existRolePermission = await unitOfWork.RolePermissions.SelectAsync(rp => rp.Id == id && !rp.IsDeleted)
+        var existRolePermission = await unitOfWork.RolePermissions.SelectAsync(rp => rp.Id == id)
             ?? throw new NotFoundException($"Role permission is not found with this ID={id}");
 
         existRolePermission.DeletedByUserId = HttpContextHelper.UserId;
@@ -51,7 +51,7 @@ public class RolePermissionService(IUnitOfWork unitOfWork) : IRolePermissionServ
     public async ValueTask<IEnumerable<RolePermission>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var rolePermissions = unitOfWork.RolePermissions
-            .SelectAsQueryable(expression: rp => !rp.IsDeleted, includes: ["Role", "Permission"], isTracked: false)
+            .SelectAsQueryable(includes: ["Role", "Permission"], isTracked: false)
             .OrderBy(filter);
 
         if (!string.IsNullOrWhiteSpace(search))
@@ -66,7 +66,7 @@ public class RolePermissionService(IUnitOfWork unitOfWork) : IRolePermissionServ
     public async ValueTask<RolePermission> GetByIdAsync(long id)
     {
         var existRolePermission = await unitOfWork.RolePermissions
-            .SelectAsync(expression: rp => rp.Id == id && !rp.IsDeleted, includes: ["Role", "Permission"])
+            .SelectAsync(expression: rp => rp.Id == id, includes: ["Role", "Permission"])
             ?? throw new NotFoundException($"Role permission is not found with this ID={id}");
 
         return existRolePermission;

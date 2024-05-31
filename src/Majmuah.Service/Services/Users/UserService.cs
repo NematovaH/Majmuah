@@ -14,7 +14,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
     private readonly string cacheKey = "EmailCodeKey";
     public async ValueTask<User> CreateAsync(User user)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(u => (u.Phone == user.Phone || u.Email == user.Email) && !u.IsDeleted);
+        var existUser = await unitOfWork.Users.SelectAsync(u => u.Phone == user.Phone || u.Email == user.Email);
         if (existUser is not null)
             throw new AlreadyExistException($"This user already exists with this phone={user.Phone}");
 
@@ -35,10 +35,10 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
 
     public async ValueTask<User> UpdateAsync(long id, User user)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id && !u.IsDeleted, includes: ["Role"])
+        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id, includes: ["Role"])
             ?? throw new NotFoundException($"User is not found with this ID={id}");
 
-        var alreadyExistUser = await unitOfWork.Users.SelectAsync(u => (u.Phone == user.Phone || u.Email == user.Email) && !u.IsDeleted && u.Id != id);
+        var alreadyExistUser = await unitOfWork.Users.SelectAsync(u => (u.Phone == user.Phone || u.Email == user.Email) && u.Id != id);
         if (alreadyExistUser is not null)
             throw new AlreadyExistException($"This user already exists with this phone={user.Phone}");
 
@@ -59,7 +59,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
 
     public async ValueTask<bool> DeleteAsync(long id)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(u => u.Id == id && !u.IsDeleted)
+        var existUser = await unitOfWork.Users.SelectAsync(u => u.Id == id)
             ?? throw new NotFoundException($"User is not found with this ID={id}");
 
         existUser.DeletedByUserId = HttpContextHelper.UserId;
@@ -71,7 +71,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
 
     public async ValueTask<User> GetByIdAsync(long id)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id && !u.IsDeleted, includes: ["Role"])
+        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id, includes: ["Role"])
             ?? throw new NotFoundException($"User is not found with this ID={id}");
 
         return existUser;
@@ -80,7 +80,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
     public async ValueTask<IEnumerable<User>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var users = unitOfWork.Users
-            .SelectAsQueryable(expression: user => !user.IsDeleted, includes: ["UserRole"], isTracked: false)
+            .SelectAsQueryable(includes: ["UserRole"], isTracked: false)
             .OrderBy(filter);
 
         if (!string.IsNullOrEmpty(search))

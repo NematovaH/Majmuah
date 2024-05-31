@@ -44,6 +44,7 @@ public class UsersController(IUserApiService userApiService) : BaseController
     }
 
     [HttpGet("{id:long}")]
+    [AllowAnonymous]
     public async ValueTask<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
@@ -55,6 +56,7 @@ public class UsersController(IUserApiService userApiService) : BaseController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async ValueTask<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams @params,
         [FromQuery] Filter filter,
