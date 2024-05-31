@@ -37,6 +37,22 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<User>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Category>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Collection>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Comment>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Asset>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Field>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<FieldValue>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Item>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<ItemTag>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Like>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Permission>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<UserRole>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<RolePermission>().HasQueryFilter(t => !t.IsDeleted);
+        modelBuilder.Entity<Tag>().HasQueryFilter(t => !t.IsDeleted);
+
         base.OnModelCreating(modelBuilder);
 
         // Many-to-many relationship between Item and Tag

@@ -1,21 +1,49 @@
 ﻿using Majmuah.DataAccess.UnitOfWorks;
 using Majmuah.Service.Helpers;
 using Majmuah.Service.Services.Assets;
+using Majmuah.Service.Services.Categories;
+using Majmuah.Service.Services.Collections;
+using Majmuah.Service.Services.Comments;
+using Majmuah.Service.Services.Fields;
+using Majmuah.Service.Services.FieldValues;
+using Majmuah.Service.Services.Items;
+using Majmuah.Service.Services.ItemTags;
+using Majmuah.Service.Services.Likes;
 using Majmuah.Service.Services.Permissions;
 using Majmuah.Service.Services.RolePermissions;
+using Majmuah.Service.Services.Tags;
 using Majmuah.Service.Services.UserRoles;
 using Majmuah.Service.Services.Users;
 using Majmuah.WebApi.ApiServices.Accounts;
+using Majmuah.WebApi.ApiServices.Categories;
+using Majmuah.WebApi.ApiServices.Collections;
+using Majmuah.WebApi.ApiServices.Fields;
+using Majmuah.WebApi.ApiServices.FieldValues;
+using Majmuah.WebApi.ApiServices.Items;
+using Majmuah.WebApi.ApiServices.ItemTags;
+using Majmuah.WebApi.ApiServices.LessonComments;
+using Majmuah.WebApi.ApiServices.Likes;
 using Majmuah.WebApi.ApiServices.Permissions;
 using Majmuah.WebApi.ApiServices.RolePermissions;
+using Majmuah.WebApi.ApiServices.Tags;
 using Majmuah.WebApi.ApiServices.UserRoles;
 using Majmuah.WebApi.ApiServices.Users;
 using Majmuah.WebApi.Helpers;
 using Majmuah.WebApi.Middlewares;
+using Majmuah.WebApi.Models.ItemTags;
 using Majmuah.WebApi.Validators.Accounts;
 using Majmuah.WebApi.Validators.Assets;
+using Majmuah.WebApi.Validators.Categories;
+using Majmuah.WebApi.Validators.Collections;
+using Majmuah.WebApi.Validators.Comments;
+using Majmuah.WebApi.Validators.Fields;
+using Majmuah.WebApi.Validators.FieldValues;
+using Majmuah.WebApi.Validators.Items;
+using Majmuah.WebApi.Validators.ItemTags;
+using Majmuah.WebApi.Validators.Likes;
 using Majmuah.WebApi.Validators.Permissions;
 using Majmuah.WebApi.Validators.RolePermissions;
+using Majmuah.WebApi.Validators.Tags;
 using Majmuah.WebApi.Validators.UserRoles;
 using Majmuah.WebApi.Validators.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,6 +63,15 @@ public static class ServicesCollection
         services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IRolePermissionService, RolePermissionService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ICollectionService, CollectionService>();
+        services.AddScoped<ICommentService, CommentService>();
+        services.AddScoped<IFieldService, FieldService>();
+        services.AddScoped<IFieldValueService,  FieldValueService>();
+        services.AddScoped<IItemService, ItemService>();
+        services.AddScoped<IItemTagService, ItemTagService>();
+        services.AddScoped<ILikeService, LikeService>();
+        services.AddScoped<ITagService, TagService>();
     }
 
     public static void AddApiServices(this IServiceCollection services)
@@ -44,6 +81,15 @@ public static class ServicesCollection
         services.AddScoped<IRolePermissionApiService, RolePermissionApiService>();
         services.AddScoped<IUserRoleApiService, UserRoleApiService>();
         services.AddScoped<IAccountApiService, AccountApiService>();
+        services.AddScoped<ITagApiService, TagApiService>();
+        services.AddScoped<ILikeApiService, LikeApiService>();
+        services.AddScoped<IItemTagApiService, ItemTagApiService>();
+        services.AddScoped<IItemApiService, ItemApiService>();
+        services.AddScoped<IFieldValueApiService, FieldValueApiService>();
+        services.AddScoped<IFieldApiService, FieldApiService>();
+        services.AddScoped<ICommentApiService, CommentApiService>();
+        services.AddScoped<ICollectionApiService, CollectionApiService>();
+        services.AddScoped<ICategoryApiService, ICategoryApiService>();
     }
 
     public static void AddValidators(this IServiceCollection services)
@@ -66,6 +112,32 @@ public static class ServicesCollection
         services.AddTransient<ConfirmCodeModelValidator>();
 
         services.AddTransient<AssetCreateModelValidator>();
+
+        services.AddTransient<CategoryCreateModelValidator>();
+        services.AddTransient<CategoryUpdateModelValidator>();
+
+        services.AddTransient<CollectionCreateModelValidator>();
+        services.AddTransient<CollectionUpdateModelValidator>();
+
+        services.AddTransient<CommentCreateModelValidator>();
+        services.AddTransient<CommentUpdateModelValidator>();
+
+        services.AddTransient<FieldCreateModelValidator>();
+        services.AddTransient<FieldUpdateModelValidator>();
+
+        services.AddTransient<FieldValueCreateModelValidator>();
+        services.AddTransient<FieldValueUpdateModelValidator>();
+
+        services.AddTransient<ItemCreateModelValidator>();
+        services.AddTransient<ItemUpdateModelValidator>();
+
+        services.AddTransient<ItemTagCreateModelValidator>();
+        services.AddTransient<ItemTagUpdateModelValidator>();
+
+        services.AddTransient<LikeCreateModelValidator>();
+
+        services.AddTransient<TagCreateModelValidator>();
+        services.AddTransient<TagUpdateModelValidator>();
     }
 
     public static void AddExceptionHandlers(this IServiceCollection services)

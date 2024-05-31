@@ -12,10 +12,10 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
 {
     public async ValueTask<Comment> CreateAsync(Comment comment)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(user => user.Id == comment.UserId && !user.IsDeleted)
+        var existUser = await unitOfWork.Users.SelectAsync(user => user.Id == comment.UserId)
             ?? throw new NotFoundException($"User is not found with this Id = {comment.UserId}");
 
-        var existItem = await unitOfWork.Items.SelectAsync(item => item.Id == comment.ItemId && !item.IsDeleted)
+        var existItem = await unitOfWork.Items.SelectAsync(item => item.Id == comment.ItemId)
              ?? throw new NotFoundException($"Item is not found with this ID = {comment.ItemId}");
 
         comment.ParentId = comment.ParentId == 0 ? null : comment.ParentId;
@@ -30,13 +30,13 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
 
     public async ValueTask<Comment> UpdateAsync(long id, Comment comment)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(user => user.Id == comment.UserId && !user.IsDeleted)
+        var existUser = await unitOfWork.Users.SelectAsync(user => user.Id == comment.UserId)
             ?? throw new NotFoundException($"User is not found with this Id = {comment.UserId}");
 
-        var existItem = await unitOfWork.Items.SelectAsync(item => item.Id == comment.ItemId && !item.IsDeleted)
+        var existItem = await unitOfWork.Items.SelectAsync(item => item.Id == comment.ItemId)
              ?? throw new NotFoundException($"Item is not found with this ID = {comment.ItemId}");
 
-        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id && !c.IsDeleted)
+        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id)
             ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
 
         existComment.Content = comment.Content;
@@ -52,7 +52,7 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
 
     public async ValueTask<bool> DeleteAsync(long id)
     {
-        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id && !c.IsDeleted)
+        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id)
             ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
 
         existComment.DeletedByUserId = HttpContextHelper.UserId;
@@ -65,7 +65,7 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
     public async ValueTask<Comment> GetByIdAsync(long id)
     {
         var existComment = await unitOfWork.Comments
-            .SelectAsync(expression: c => c.Id == id && !c.IsDeleted, includes: new[] { "Item", "User", "Parent", "Replies" })
+            .SelectAsync(expression: c => c.Id == id, includes: new[] { "Item", "User", "Parent", "Replies" })
             ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
 
         return existComment;
@@ -74,7 +74,7 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
     public async ValueTask<IEnumerable<Comment>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var comments = unitOfWork.Comments
-            .SelectAsQueryable(expression: c => !c.IsDeleted, includes: new[] { "Item", "User", "Parent", "Replies" }, isTracked: false)
+            .SelectAsQueryable(includes: new[] { "Item", "User", "Parent", "Replies" }, isTracked: false)
             .OrderBy(filter);
 
         if (!string.IsNullOrWhiteSpace(search))

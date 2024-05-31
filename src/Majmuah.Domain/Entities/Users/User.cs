@@ -18,5 +18,4 @@ public class User : Auditable
     public IEnumerable<Collection> Collections { get; set; }
     public IEnumerable<Like> Likes { get; set; }
     public IEnumerable<Comment> Comments { get; set; } 
-
 }
