@@ -65,4 +65,26 @@ public class CollectionsController(ICollectionApiService collectionApiService) :
             Data = await collectionApiService.GetAsync(@params, filter, search)
         });
     }
+
+    [HttpPost("pictures/{id:long}")]
+    public async ValueTask<IActionResult> UploadPictureAsync(long id, IFormFile file)
+    {
+        return Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Ok",
+            Data = await collectionApiService.UploadPictureAsync(id, file)
+        });
+    }
+
+    [HttpDelete("pictures/{id:long}")]
+    public async ValueTask<IActionResult> DeletePictureAsync(long id)
+    {
+        return Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "Ok",
+            Data = await collectionApiService.DeletePictureAsync(id)
+        });
+    }
 }

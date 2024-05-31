@@ -89,7 +89,7 @@ public static class ServicesCollection
         services.AddScoped<IFieldApiService, FieldApiService>();
         services.AddScoped<ICommentApiService, CommentApiService>();
         services.AddScoped<ICollectionApiService, CollectionApiService>();
-        services.AddScoped<ICategoryApiService, ICategoryApiService>();
+        services.AddScoped<ICategoryApiService, CategoryApiService>();
     }
 
     public static void AddValidators(this IServiceCollection services)
