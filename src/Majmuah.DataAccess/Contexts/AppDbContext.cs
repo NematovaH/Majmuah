@@ -26,9 +26,6 @@ public class AppDbContext : DbContext
     public DbSet<Field> Fields { get; set; }
     public DbSet<FieldValue> FieldValues { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<Permission> Permissions { get; set; }
-    public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<Like> Likes { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Asset> Assets { get; set; }
@@ -48,9 +45,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Item>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<ItemTag>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Like>().HasQueryFilter(t => !t.IsDeleted);
-        modelBuilder.Entity<Permission>().HasQueryFilter(t => !t.IsDeleted);
-        modelBuilder.Entity<UserRole>().HasQueryFilter(t => !t.IsDeleted);
-        modelBuilder.Entity<RolePermission>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Tag>().HasQueryFilter(t => !t.IsDeleted);
 
         base.OnModelCreating(modelBuilder);
@@ -103,24 +97,6 @@ public class AppDbContext : DbContext
             .HasOne(c => c.Category)
             .WithMany(cat => cat.Collections)
             .HasForeignKey(c => c.CategoryId);
-
-        // One-to-many relationship between UserRole and User
-        modelBuilder.Entity<User>()
-            .HasOne(u => u.UserRole)
-            .WithMany(ur => ur.Users)
-            .HasForeignKey(u => u.RoleId);
-
-        // One-to-many relationship between UserRole and RolePermission
-        modelBuilder.Entity<RolePermission>()
-            .HasOne(rp => rp.Role)
-            .WithMany(r => r.RolePermissions)
-            .HasForeignKey(rp => rp.RoleId);
-
-        // One-to-many relationship between Permission and RolePermission
-        modelBuilder.Entity<RolePermission>()
-            .HasOne(rp => rp.Permission)
-            .WithMany()
-            .HasForeignKey(rp => rp.PermissionId);
 
         // One-to-many relationship between Item and Like
         modelBuilder.Entity<Like>()
