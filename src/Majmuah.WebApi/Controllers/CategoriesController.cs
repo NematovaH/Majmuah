@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
+[CustomAuthorize(nameof(UserRole.Admin))]
 public class CategoriesController(ICategoryApiService categoryApiService) : BaseController
 {
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(CategoryCreateModel createModel)
     {
@@ -22,7 +22,6 @@ public class CategoriesController(ICategoryApiService categoryApiService) : Base
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, CategoryUpdateModel updateModel)
     {
@@ -34,7 +33,6 @@ public class CategoriesController(ICategoryApiService categoryApiService) : Base
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {

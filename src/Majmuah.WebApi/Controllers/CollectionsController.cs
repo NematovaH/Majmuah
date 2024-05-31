@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
+
+[CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
 public class CollectionsController(ICollectionApiService collectionApiService) : BaseController
 {
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(CollectionCreateModel createModel)
     {
@@ -22,7 +23,6 @@ public class CollectionsController(ICollectionApiService collectionApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, CollectionUpdateModel updateModel)
     {
@@ -34,7 +34,6 @@ public class CollectionsController(ICollectionApiService collectionApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {
@@ -73,7 +72,6 @@ public class CollectionsController(ICollectionApiService collectionApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost("pictures/{id:long}")]
     public async ValueTask<IActionResult> UploadPictureAsync(long id, IFormFile file)
     {
@@ -85,7 +83,6 @@ public class CollectionsController(ICollectionApiService collectionApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("pictures/{id:long}")]
     public async ValueTask<IActionResult> DeletePictureAsync(long id)
     {

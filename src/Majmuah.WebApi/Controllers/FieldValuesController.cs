@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
+
+[CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
 public class FieldValuesController(IFieldValueApiService fieldValueApiService) : BaseController
 {
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(FieldValueCreateModel createModel)
     {
@@ -22,7 +23,6 @@ public class FieldValuesController(IFieldValueApiService fieldValueApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, FieldValueUpdateModel updateModel)
     {
@@ -34,7 +34,6 @@ public class FieldValuesController(IFieldValueApiService fieldValueApiService) :
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {

@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
+
+[CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
 public class LikesController(ILikeApiService fieldApiService) : BaseController
 {
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(LikeCreateModel createModel)
     {
@@ -21,7 +22,6 @@ public class LikesController(ILikeApiService fieldApiService) : BaseController
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {

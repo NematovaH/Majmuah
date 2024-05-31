@@ -1,5 +1,4 @@
-﻿using Majmuah.Domain.Enums;
-using Majmuah.WebApi.ApiServices.Accounts;
+﻿using Majmuah.WebApi.ApiServices.Accounts;
 using Majmuah.WebApi.Models.Accounts;
 using Majmuah.WebApi.Models.Commons;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +22,6 @@ public class AccountsController(IAccountApiService accountApiService) : Controll
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpGet("send-code")]
     public async ValueTask<IActionResult> SendCodeAsync([FromQuery] SendCodeModel sendCodeModel)
     {
@@ -35,7 +33,6 @@ public class AccountsController(IAccountApiService accountApiService) : Controll
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpGet("confirm-code")]
     public async ValueTask<IActionResult> ConfirmAsync([FromQuery] ConfirmCodeModel confirmCodeModel)
     {
@@ -47,7 +44,6 @@ public class AccountsController(IAccountApiService accountApiService) : Controll
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPatch("reset-password")]
     public async ValueTask<IActionResult> ResetPasswordAsync([FromQuery] ResetPasswordModel resetPasswordModel)
     {

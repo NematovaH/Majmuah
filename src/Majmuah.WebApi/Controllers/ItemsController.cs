@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
+
+[CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
 public class ItemsController(IItemApiService itemApiService) : BaseController
 {
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(ItemCreateModel createModel)
     {
@@ -22,7 +23,6 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, ItemUpdateModel updateModel)
     {
@@ -34,7 +34,6 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
-    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {

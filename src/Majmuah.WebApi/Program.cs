@@ -46,20 +46,24 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-
 var app = builder.Build();
 app.AddInjectEnvironmentItems();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
+
 app.AddInjectEnvironmentItems();
+
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseCors("AllowSpecificOrigin");
+
 app.UseAuthorization();
 
 app.MapControllers();
