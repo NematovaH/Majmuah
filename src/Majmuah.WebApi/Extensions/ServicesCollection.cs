@@ -9,10 +9,7 @@ using Majmuah.Service.Services.FieldValues;
 using Majmuah.Service.Services.Items;
 using Majmuah.Service.Services.ItemTags;
 using Majmuah.Service.Services.Likes;
-using Majmuah.Service.Services.Permissions;
-using Majmuah.Service.Services.RolePermissions;
 using Majmuah.Service.Services.Tags;
-using Majmuah.Service.Services.UserRoles;
 using Majmuah.Service.Services.Users;
 using Majmuah.WebApi.ApiServices.Accounts;
 using Majmuah.WebApi.ApiServices.Categories;
@@ -23,14 +20,10 @@ using Majmuah.WebApi.ApiServices.Items;
 using Majmuah.WebApi.ApiServices.ItemTags;
 using Majmuah.WebApi.ApiServices.LessonComments;
 using Majmuah.WebApi.ApiServices.Likes;
-using Majmuah.WebApi.ApiServices.Permissions;
-using Majmuah.WebApi.ApiServices.RolePermissions;
 using Majmuah.WebApi.ApiServices.Tags;
-using Majmuah.WebApi.ApiServices.UserRoles;
 using Majmuah.WebApi.ApiServices.Users;
 using Majmuah.WebApi.Helpers;
 using Majmuah.WebApi.Middlewares;
-using Majmuah.WebApi.Models.ItemTags;
 using Majmuah.WebApi.Validators.Accounts;
 using Majmuah.WebApi.Validators.Assets;
 using Majmuah.WebApi.Validators.Categories;
@@ -41,10 +34,7 @@ using Majmuah.WebApi.Validators.FieldValues;
 using Majmuah.WebApi.Validators.Items;
 using Majmuah.WebApi.Validators.ItemTags;
 using Majmuah.WebApi.Validators.Likes;
-using Majmuah.WebApi.Validators.Permissions;
-using Majmuah.WebApi.Validators.RolePermissions;
 using Majmuah.WebApi.Validators.Tags;
-using Majmuah.WebApi.Validators.UserRoles;
 using Majmuah.WebApi.Validators.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -59,15 +49,12 @@ public static class ServicesCollection
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserRoleService, UserRoleService>();
         services.AddScoped<IAssetService, AssetService>();
-        services.AddScoped<IPermissionService, PermissionService>();
-        services.AddScoped<IRolePermissionService, RolePermissionService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ICollectionService, CollectionService>();
         services.AddScoped<ICommentService, CommentService>();
         services.AddScoped<IFieldService, FieldService>();
-        services.AddScoped<IFieldValueService,  FieldValueService>();
+        services.AddScoped<IFieldValueService, FieldValueService>();
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<IItemTagService, ItemTagService>();
         services.AddScoped<ILikeService, LikeService>();
@@ -77,9 +64,6 @@ public static class ServicesCollection
     public static void AddApiServices(this IServiceCollection services)
     {
         services.AddScoped<IUserApiService, UserApiService>();
-        services.AddScoped<IPermissionApiService, PermissionApiService>();
-        services.AddScoped<IRolePermissionApiService, RolePermissionApiService>();
-        services.AddScoped<IUserRoleApiService, UserRoleApiService>();
         services.AddScoped<IAccountApiService, AccountApiService>();
         services.AddScoped<ITagApiService, TagApiService>();
         services.AddScoped<ILikeApiService, LikeApiService>();
@@ -97,14 +81,6 @@ public static class ServicesCollection
         services.AddTransient<UserCreateModelValidator>();
         services.AddTransient<UserUpdateModelValidator>();
         services.AddTransient<UserChangePasswordModelValidator>();
-
-        services.AddTransient<UserRoleCreateModelValidator>();
-        services.AddTransient<UserRoleUpdateModelValidator>();
-
-        services.AddTransient<PermissionCreateModelValidator>();
-        services.AddTransient<PermissionUpdateModelValidator>();
-
-        services.AddTransient<RolePermissionCreateModelValidator>();
 
         services.AddTransient<LoginModelValidator>();
         services.AddTransient<ResetPasswordModelValidator>();

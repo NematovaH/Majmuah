@@ -1,9 +1,11 @@
-﻿using Majmuah.Service.Configurations;
+﻿using Majmuah.Domain.Enums;
+using Majmuah.Service.Configurations;
 using Majmuah.WebApi.ApiServices.Users;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Majmuah.WebApi.Controllers;
 
@@ -17,11 +19,12 @@ public class UsersController(IUserApiService userApiService) : BaseController
         {
             StatusCode = 200,
             Message = "Ok",
-            Data = await userApiService.PostAsync(createModel)
+            Data = await userApiService.PostAdminAsync(createModel)
         });
     }
 
     [HttpPut("{id:long}")]
+    [Authorize("UserRole.Admin")]
     public async ValueTask<IActionResult> PutAsync(long id, UserUpdateModel updateModel)
     {
         return Ok(new Response

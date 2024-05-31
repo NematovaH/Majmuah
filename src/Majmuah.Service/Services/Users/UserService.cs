@@ -12,25 +12,30 @@ namespace Majmuah.Service.Services.Users;
 public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUserService
 {
     private readonly string cacheKey = "EmailCodeKey";
-    public async ValueTask<User> CreateAsync(User user)
+    
+    private async Task<User> CreateUserAsync(User user, Domain.Enums.UserRole role)
     {
         var existUser = await unitOfWork.Users.SelectAsync(u => u.Phone == user.Phone || u.Email == user.Email);
         if (existUser is not null)
             throw new AlreadyExistException($"This user already exists with this phone={user.Phone}");
 
-        var existRole = await unitOfWork.UserRoles.SelectAsync(role => role.Id == user.RoleId);
-
-        var adminRoleId = await GetRoleIdAsync();
-
-        user.RoleId = user.RoleId == 0 ? adminRoleId : user.RoleId;
-
+        user.UserRole = role;
         user.CreatedByUserId = HttpContextHelper.UserId;
         user.PasswordHash = PasswordHasher.Hash(user.PasswordHash);
-        user.UserRole = existRole;
+
         var createdUser = await unitOfWork.Users.InsertAsync(user);
         await unitOfWork.SaveAsync();
-
         return createdUser;
+    }
+
+    public async ValueTask<User> CreateUserAsync(User user)
+    {
+        return await CreateUserAsync(user, Domain.Enums.UserRole.User);
+    }
+
+    public async ValueTask<User> CreateAdminAsync(User user)
+    {
+        return await CreateUserAsync(user, Domain.Enums.UserRole.Admin);
     }
 
     public async ValueTask<User> UpdateAsync(long id, User user)
@@ -41,9 +46,6 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
         var alreadyExistUser = await unitOfWork.Users.SelectAsync(u => (u.Phone == user.Phone || u.Email == user.Email) && u.Id != id);
         if (alreadyExistUser is not null)
             throw new AlreadyExistException($"This user already exists with this phone={user.Phone}");
-
-        var existRole = await unitOfWork.UserRoles.SelectAsync(role => role.Id == existUser.RoleId)
-            ?? throw new NotFoundException($"Role is not found with this ID={existUser.UserRole}");
 
         existUser.Phone = user.Phone;
         existUser.Email = user.Email;
@@ -165,11 +167,12 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
 
         return existUser;
     }
-    private async ValueTask<long> GetRoleIdAsync()
-    {
-        var role = await unitOfWork.UserRoles.SelectAsync(role => role.Name.ToLower() == Constants.AdminRoleName.ToLower())
-            ?? throw new NotFoundException($"Role is not found with this name {Constants.AdminRoleName}");
 
-        return role.Id;
+    public async ValueTask<bool> RemoveAdminRoleAsync()
+    {
+        var existUser = await unitOfWork.Users.SelectAsync(u => u.Id == HttpContextHelper.UserId);
+        existUser.UserRole = Domain.Enums.UserRole.User;
+        await unitOfWork.SaveAsync();
+        return true;
     }
 }

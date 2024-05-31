@@ -32,10 +32,17 @@ public class UserApiService(
         return mapper.Map<IEnumerable<UserViewModel>>(users);
     }
 
-    public async ValueTask<UserViewModel> PostAsync(UserCreateModel createModel)
+    public async ValueTask<UserViewModel> PostAdminAsync(UserCreateModel createModel)
     {
         await createModelValidator.EnsureValidatedAsync(createModel);
-        var createdUser = await userService.CreateAsync(mapper.Map<User>(createModel));
+        var createdUser = await userService.CreateAdminAsync(mapper.Map<User>(createModel));
+        return mapper.Map<UserViewModel>(createdUser);
+    }
+
+    public async ValueTask<UserViewModel> PostUserAsync(UserCreateModel createModel)
+    {
+        await createModelValidator.EnsureValidatedAsync(createModel);
+        var createdUser = await userService.CreateUserAsync(mapper.Map<User>(createModel));
         return mapper.Map<UserViewModel>(createdUser);
     }
 

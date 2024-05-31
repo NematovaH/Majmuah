@@ -18,9 +18,6 @@ public class UnitOfWork : IUnitOfWork
     private readonly AppDbContext context;
     public IRepository<User> Users { get; }
     public IRepository<Asset> Assets { get; }
-    public IRepository<UserRole> UserRoles { get; }
-    public IRepository<Permission> Permissions { get; }
-    public IRepository<RolePermission> RolePermissions { get; }
     public IRepository<Category> Categories { get; set; }
     public IRepository<Collection> Collections { get; set; }
     public IRepository<Comment> Comments { get; set; }
@@ -38,9 +35,6 @@ public class UnitOfWork : IUnitOfWork
         this.context = context;
         Users = new Repository<User>(this.context);
         Assets = new Repository<Asset>(this.context);
-        UserRoles = new Repository<UserRole>(this.context);
-        Permissions = new Repository<Permission>(this.context);
-        RolePermissions = new Repository<RolePermission>(this.context);
         Categories = new Repository<Category>(this.context);
         Collections = new Repository<Collection>(this.context);
         Comments = new Repository<Comment>(this.context);

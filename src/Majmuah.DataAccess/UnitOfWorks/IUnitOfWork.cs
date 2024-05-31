@@ -15,9 +15,6 @@ public interface IUnitOfWork : IDisposable
 {
     IRepository<User> Users { get; }
     IRepository<Asset> Assets { get; }
-    IRepository<UserRole> UserRoles { get; }
-    IRepository<Permission> Permissions { get; }
-    IRepository<RolePermission> RolePermissions { get; }
     IRepository<Category> Categories { get; set; }
     IRepository<Collection> Collections { get; set; }
     IRepository<Comment> Comments { get; set; }

@@ -5,7 +5,8 @@ namespace Majmuah.WebApi.ApiServices.Users;
 
 public interface IUserApiService
 {
-    ValueTask<UserViewModel> PostAsync(UserCreateModel createModel);
+    ValueTask<UserViewModel> PostUserAsync(UserCreateModel createModel);
+    ValueTask<UserViewModel> PostAdminAsync(UserCreateModel createModel);
     ValueTask<UserViewModel> PutAsync(long id, UserUpdateModel createModel);
     ValueTask<bool> DeleteAsync(long id);
     ValueTask<UserViewModel> GetAsync(long id);

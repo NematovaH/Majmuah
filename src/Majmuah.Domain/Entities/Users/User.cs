@@ -2,6 +2,7 @@
 using Majmuah.Domain.Entities.Collections;
 using Majmuah.Domain.Entities.Comments;
 using Majmuah.Domain.Entities.Likes;
+using Majmuah.Domain.Enums;
 
 namespace Majmuah.Domain.Entities.Users;
 

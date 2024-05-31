@@ -18,7 +18,7 @@ public class AuthHelper
             {
                  new Claim("Id", user.Id.ToString()),
                  new Claim("Phone", user.Phone),
-                 new Claim(ClaimTypes.Role, user.UserRole.Name)
+                 new Claim(ClaimTypes.Role, user.UserRole.ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(Convert.ToInt32(EnvironmentHelper.TokenLifeTimeInHours)),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
