@@ -14,7 +14,6 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 
-builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultDbConnection")));
 
@@ -43,11 +42,9 @@ var app = builder.Build();
 app.AddInjectHelper();
 app.InjectEnvironmentItems();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
