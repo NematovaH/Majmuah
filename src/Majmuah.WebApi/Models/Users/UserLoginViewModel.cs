@@ -1,4 +1,4 @@
-﻿using Majmuah.WebApi.Models.UserRoles;
+﻿using Majmuah.Domain.Enums;
 
 namespace Majmuah.WebApi.Models.Users;
 
@@ -10,6 +10,7 @@ public class UserLoginViewModel
     public string Email { get; set; }
     public string Phone { get; set; }
     public string Token { get; set; }
+    public bool IsBlocked { get; set; }
+    public UserRole UserRole { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public UserRoleViewModel Role { get; set; }
 }

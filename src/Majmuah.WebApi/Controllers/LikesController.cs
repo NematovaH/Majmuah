@@ -1,12 +1,15 @@
-﻿using Majmuah.WebApi.ApiServices.Likes;
+﻿using Majmuah.Domain.Enums;
+using Majmuah.WebApi.ApiServices.Likes;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Likes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
 public class LikesController(ILikeApiService fieldApiService) : BaseController
 {
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(LikeCreateModel createModel)
     {
@@ -18,6 +21,7 @@ public class LikesController(ILikeApiService fieldApiService) : BaseController
         });
     }
 
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {
@@ -29,7 +33,8 @@ public class LikesController(ILikeApiService fieldApiService) : BaseController
         });
     }
 
-    [HttpGet("{id:long}")]
+    [AllowAnonymous]
+    [HttpGet("user/{userId:long}")]
     public async ValueTask<IActionResult> GetAllByUserIdAsync(long userId)
     {
         return Ok(new Response
@@ -40,7 +45,8 @@ public class LikesController(ILikeApiService fieldApiService) : BaseController
         });
     }
 
-    [HttpGet]
+    [AllowAnonymous]
+    [HttpGet("item/{itemId:long}")]
     public async ValueTask<IActionResult> GetAllByItemIdAsync(long itemId)
     {
         return Ok(new Response

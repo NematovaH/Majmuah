@@ -17,10 +17,7 @@ using Majmuah.WebApi.Models.FieldValues;
 using Majmuah.WebApi.Models.Items;
 using Majmuah.WebApi.Models.ItemTags;
 using Majmuah.WebApi.Models.Likes;
-using Majmuah.WebApi.Models.Permissions;
-using Majmuah.WebApi.Models.RolePermissions;
 using Majmuah.WebApi.Models.Tags;
-using Majmuah.WebApi.Models.UserRoles;
 using Majmuah.WebApi.Models.Users;
 
 namespace Majmuah.WebApi.Mappers;
@@ -30,17 +27,6 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<AssetViewModel, Asset>().ReverseMap();
-
-        CreateMap<PermissionViewModel, Permission>().ReverseMap();
-        CreateMap<Permission, PermissionCreateModel>().ReverseMap();
-        CreateMap<Permission, PermissionUpdateModel>().ReverseMap();
-
-        CreateMap<RolePermissionViewModel, RolePermission>().ReverseMap();
-        CreateMap<RolePermission, RolePermissionCreateModel>().ReverseMap();
-
-        CreateMap<UserRoleViewModel, UserRole>().ReverseMap();
-        CreateMap<UserRole, UserRoleCreateModel>().ReverseMap();
-        CreateMap<UserRole, UserRoleUpdateModel>().ReverseMap();
 
         CreateMap<UserViewModel, User>().ReverseMap();
         CreateMap<UserLoginViewModel, User>().ReverseMap();

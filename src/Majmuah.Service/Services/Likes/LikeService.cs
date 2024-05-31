@@ -49,7 +49,7 @@ public class LikeService(IUnitOfWork unitOfWork) : ILikeService
 
     public async ValueTask<IEnumerable<Like>> GetAllAByUserIdsync(long userId)
     {
-        var item = await unitOfWork.Users.SelectAsync(i => i.Id == userId)
+        var user = await unitOfWork.Users.SelectAsync(i => i.Id == userId)
             ?? throw new NotFoundException($"User is not found with this Id={userId}");
 
         return await unitOfWork.Likes.SelectAsEnumerableAsync(expression: l => l.UserId == userId, includes: ["User", "Item"], isTracked: false);

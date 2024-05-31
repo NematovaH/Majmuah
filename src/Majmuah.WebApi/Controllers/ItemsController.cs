@@ -1,13 +1,16 @@
-﻿using Majmuah.Service.Configurations;
+﻿using Majmuah.Domain.Enums;
+using Majmuah.Service.Configurations;
 using Majmuah.WebApi.ApiServices.Items;
 using Majmuah.WebApi.Models.Commons;
 using Majmuah.WebApi.Models.Items;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Majmuah.WebApi.Controllers;
 
 public class ItemsController(IItemApiService itemApiService) : BaseController
 {
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPost]
     public async ValueTask<IActionResult> PostAsync(ItemCreateModel createModel)
     {
@@ -19,6 +22,7 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpPut("{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id, ItemUpdateModel updateModel)
     {
@@ -30,6 +34,7 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
+    [CustomAuthorize(nameof(UserRole.Admin), nameof(UserRole.User))]
     [HttpDelete("{id:long}")]
     public async ValueTask<IActionResult> DeleteAsync(long id)
     {
@@ -41,6 +46,7 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:long}")]
     public async ValueTask<IActionResult> GetAsync(long id)
     {
@@ -52,6 +58,7 @@ public class ItemsController(IItemApiService itemApiService) : BaseController
         });
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async ValueTask<IActionResult> GetAllAsync(
         [FromQuery] PaginationParams @params,

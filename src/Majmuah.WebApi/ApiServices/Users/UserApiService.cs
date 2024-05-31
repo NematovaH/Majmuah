@@ -60,4 +60,15 @@ public class UserApiService(
             .ChangePasswordAsync(changePasswordModel.Phone, changePasswordModel.OldPassword, changePasswordModel.NewPassword);
         return mapper.Map<UserViewModel>(user);
     }
+
+    public async ValueTask<UserViewModel> ChangeUserStatusAsync(long id)
+    {
+        var user = await userService.ChangeUserStatusAsync(id);
+        return mapper.Map<UserViewModel>(user);
+    }
+
+    public async ValueTask<bool> RemoveAdminRoleAsync()
+    {
+        return await userService.RemoveAdminRoleAsync();
+    }
 }

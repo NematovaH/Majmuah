@@ -12,6 +12,10 @@ public class UserCreateModelValidator : AbstractValidator<UserCreateModel>
             .NotNull()
             .WithMessage(user => $"{nameof(user.FirstName)} is not specified");
 
+        RuleFor(user => user.LastName)
+            .NotNull()
+            .WithMessage(user => $"{nameof(user.FirstName)} is not specified");
+
         RuleFor(user => user.Phone)
             .NotNull()
             .WithMessage(user => $"{nameof(user.Phone)} is not specified");
@@ -26,7 +30,7 @@ public class UserCreateModelValidator : AbstractValidator<UserCreateModel>
         RuleFor(user => user.Email)
             .Must(ValidationHelper.IsEmailValid);
 
-        RuleFor(user => user.Password)
+        RuleFor(user => user.PasswordHash)
             .Must(ValidationHelper.IsPasswordHard);
     }
 }
