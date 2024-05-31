@@ -40,6 +40,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 
 var app = builder.Build();
+app.AddInjectHelper();
+app.InjectEnvironmentItems();
 
 if (app.Environment.IsDevelopment())
 {
