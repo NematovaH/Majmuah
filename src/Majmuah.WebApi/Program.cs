@@ -18,8 +18,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
         {
-            builder.WithOrigins("https://majmuah-latest.onrender.com", "http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
-        });
+            builder.WithOrigins("https://majmuah-latest.onrender.com", "http://localhost:8080", "http://localhost:8081").AllowAnyHeader().AllowAnyMethod();
+        }
+    );
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>

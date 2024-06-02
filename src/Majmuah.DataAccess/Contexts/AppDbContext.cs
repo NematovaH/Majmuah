@@ -34,7 +34,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
         modelBuilder.Entity<User>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Category>().HasQueryFilter(t => !t.IsDeleted);
         modelBuilder.Entity<Collection>().HasQueryFilter(t => !t.IsDeleted);
