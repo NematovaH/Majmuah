@@ -24,7 +24,7 @@ public class ItemService(IUnitOfWork unitOfWork) : IItemService
         var createdItem = await unitOfWork.Items.InsertAsync(item);
         createdItem.Collection = existCollection;
         await unitOfWork.SaveAsync();
-       
+
         return createdItem;
     }
 
@@ -73,7 +73,7 @@ public class ItemService(IUnitOfWork unitOfWork) : IItemService
     public async ValueTask<IEnumerable<Item>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var items = unitOfWork.Items.SelectAsQueryable(includes: ["Collection", "ItemTags", "Likes", "FieldValues", "Comments"]).OrderBy(filter);
-        if(!string.IsNullOrEmpty(search))
+        if (!string.IsNullOrEmpty(search))
             items = items.Where(i => i.Name.ToLower().Contains(search.ToLower()));
         return await items.ToPaginateAsQueryable(@params).ToListAsync();
     }

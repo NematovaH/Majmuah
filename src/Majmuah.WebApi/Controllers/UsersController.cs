@@ -23,9 +23,9 @@ public class UsersController(IUserApiService userApiService) : BaseController
             Data = await userApiService.PostAdminAsync(createModel)
         });
     }
-    
+
     [AllowAnonymous]
-    [HttpPost]
+    [HttpPost("user")]
     public async ValueTask<IActionResult> PostAsync(UserCreateModel createModel)
     {
         return Ok(new Response
@@ -48,7 +48,7 @@ public class UsersController(IUserApiService userApiService) : BaseController
     }
 
     [CustomAuthorize(nameof(UserRole.Admin))]
-    [HttpPut("changeStatus/{id:long}")]
+    [HttpPut("changeBlockStatus/{id:long}")]
     public async ValueTask<IActionResult> PutAsync(long id)
     {
         return Ok(new Response

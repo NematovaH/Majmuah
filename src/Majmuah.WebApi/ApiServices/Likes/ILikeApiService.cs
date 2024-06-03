@@ -1,5 +1,4 @@
-﻿using Majmuah.Service.Configurations;
-using Majmuah.WebApi.Models.Likes;
+﻿using Majmuah.WebApi.Models.Likes;
 
 namespace Majmuah.WebApi.ApiServices.Likes;
 

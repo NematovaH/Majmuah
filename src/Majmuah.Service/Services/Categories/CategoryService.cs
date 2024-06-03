@@ -64,7 +64,7 @@ public class CategoryService(IUnitOfWork unitOfWork) : ICategoryService
     {
         var categories = unitOfWork.Categories.SelectAsQueryable().OrderBy(filter);
 
-        if(!string.IsNullOrEmpty(search))
+        if (!string.IsNullOrEmpty(search))
             categories = categories.Where(c => c.Name.Contains(search, StringComparison.Ordinal));
 
         return await categories.ToPaginateAsQueryable(@params).ToListAsync();

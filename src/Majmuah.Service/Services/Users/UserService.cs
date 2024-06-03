@@ -12,7 +12,7 @@ namespace Majmuah.Service.Services.Users;
 public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUserService
 {
     private readonly string cacheKey = "EmailCodeKey";
-    
+
     private async Task<User> CreateUserAsync(User user, Domain.Enums.UserRole role)
     {
         var existUser = await unitOfWork.Users.SelectAsync(u => u.Phone == user.Phone || u.Email == user.Email);

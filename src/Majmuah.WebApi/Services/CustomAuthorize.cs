@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Majmuah.Domain.Enums;
+﻿using Majmuah.Domain.Enums;
 using Majmuah.Service.Exceptions;
 using Majmuah.WebApi.Models.Commons;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
 
 public class CustomAuthorize : Attribute, IAuthorizationFilter
 {

@@ -66,7 +66,7 @@ public class TagService(IUnitOfWork unitOfWork) : ITagService
         var tags = unitOfWork.Tags.SelectAsQueryable().OrderBy(filter);
         if (!string.IsNullOrEmpty(search))
             tags = tags.Where(t => t.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
-        
+
         return await tags.ToPaginateAsQueryable(@params).ToListAsync();
     }
 }

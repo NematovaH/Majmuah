@@ -46,7 +46,7 @@ public class CollectionApiService(
         var createdCollection = await collectionService.UpdateAsync(id, mappedCollection);
         return mapper.Map<CollectionViewModel>(createdCollection);
     }
-    
+
     public async ValueTask<CollectionViewModel> UploadPictureAsync(long id, IFormFile picture)
     {
         var existCollection = await collectionService.UploadFileAsync(id, picture);

@@ -14,11 +14,11 @@ public class FieldService(IUnitOfWork unitOfWork) : IFieldService
     {
         var existCollection = await unitOfWork.Collections.SelectAsync(c => c.Id == field.CollectionId)
             ?? throw new NotFoundException($"Collection is not found with this ID={field.CollectionId}");
-        
-        var alreadyExistField = await unitOfWork.Fields.SelectAsync(f => f.Name.ToLower() == field.Name.ToLower());
-                if (alreadyExistField is not null)
+
+        var alreadyExistField = await unitOfWork.Fields.SelectAsync(f => f.Name.ToLower() == field.Name.ToLower() && f.FieldType == field.FieldType);
+        if (alreadyExistField is not null)
             throw new AlreadyExistException("This field is already exist");
-        
+
         field.CreatedByUserId = HttpContextHelper.UserId;
         var createdField = await unitOfWork.Fields.InsertAsync(field);
         createdField.Collection = existCollection;
@@ -35,11 +35,12 @@ public class FieldService(IUnitOfWork unitOfWork) : IFieldService
         var existCollection = await unitOfWork.Collections.SelectAsync(c => c.Id == field.CollectionId)
             ?? throw new NotFoundException($"Collection is not found with this ID={field.CollectionId}");
 
-        var alreadyExistField = await unitOfWork.Fields.SelectAsync(c => c.Name.ToLower() == field.Name.ToLower());
+        var alreadyExistField = await unitOfWork.Fields.SelectAsync(c => c.Name.ToLower() == field.Name.ToLower() && c.FieldType == field.FieldType);
         if (alreadyExistField is not null)
             throw new AlreadyExistException("This field is already exist");
 
         existField.Name = field.Name;
+        existField.FieldType = field.FieldType;
         existField.CollectionId = field.CollectionId;
 
         existCollection.UpdatedByUserId = HttpContextHelper.UserId;
@@ -73,9 +74,9 @@ public class FieldService(IUnitOfWork unitOfWork) : IFieldService
     {
         var fields = unitOfWork.Fields.SelectAsQueryable(includes: ["Collection"]).OrderBy(filter);
 
-        if(!string.IsNullOrWhiteSpace(search))
-            fields = fields.Where(f => f.Name.ToLower().Contains(search.ToLower()));         
-        
+        if (!string.IsNullOrWhiteSpace(search))
+            fields = fields.Where(f => f.Name.ToLower().Contains(search.ToLower()));
+
         return await fields.ToPaginateAsQueryable(@params).ToListAsync();
     }
 }
