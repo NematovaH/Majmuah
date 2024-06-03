@@ -71,7 +71,7 @@ public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetServic
     public async ValueTask<IEnumerable<Collection>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var collections = unitOfWork.Collections.SelectAsQueryable().OrderBy(filter);
-        if(!string.IsNullOrEmpty(search))
+        if (!string.IsNullOrEmpty(search))
             collections = collections.Where(c => c.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
 
         return await collections.ToPaginateAsQueryable(@params).ToListAsync();

@@ -5,6 +5,6 @@ namespace Majmuah.Domain.Entities.Categories;
 
 public class Category : Auditable
 {
-    public string Name {  get; set; }
+    public string Name { get; set; }
     public IEnumerable<Collection> Collections { get; set; }
 }

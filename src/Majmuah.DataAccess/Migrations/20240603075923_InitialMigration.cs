@@ -149,6 +149,7 @@ namespace Majmuah.DataAccess.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    FieldType = table.Column<int>(type: "integer", nullable: false),
                     CollectionId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
@@ -341,8 +342,8 @@ namespace Majmuah.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedAt", "CreatedByUserId", "DeletedAt", "DeletedByUserId", "IsDeleted", "Name", "Path", "UpdatedAt", "UpdatedByUserId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2052), 0L, null, null, false, "Picture", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-photos%2Fpicture&psig=AOvVaw3XaUHI9Jhqr2Yekc8F0A7X&ust=1715337265006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjGn7WvgIYDFQAAAAAdAAAAABAE", null, null },
-                    { 2L, new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2064), 0L, null, null, false, "Picture2", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-photos%2Fpicture&psig=AOvVaw3XaUHI9Jhqr2Yekc8F0A7X&ust=1715337265006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjGn7WvgIYDFQAAAAAdAAAAABAE", null, null }
+                    { 1L, new DateTime(2024, 6, 3, 7, 59, 23, 308, DateTimeKind.Utc).AddTicks(9035), 0L, null, null, false, "Picture", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-photos%2Fpicture&psig=AOvVaw3XaUHI9Jhqr2Yekc8F0A7X&ust=1715337265006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjGn7WvgIYDFQAAAAAdAAAAABAE", null, null },
+                    { 2L, new DateTime(2024, 6, 3, 7, 59, 23, 308, DateTimeKind.Utc).AddTicks(9040), 0L, null, null, false, "Picture2", "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-photos%2Fpicture&psig=AOvVaw3XaUHI9Jhqr2Yekc8F0A7X&ust=1715337265006000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNjGn7WvgIYDFQAAAAAdAAAAABAE", null, null }
                 });
 
             migrationBuilder.CreateIndex(

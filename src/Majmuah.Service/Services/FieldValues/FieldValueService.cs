@@ -19,7 +19,7 @@ public class FieldValueService(IUnitOfWork unitOfWork) : IFieldValueService
             ?? throw new NotFoundException($"Item is not found with this ID={fieldValue.ItemId}");
 
         var alreadyExistFieldValue = await unitOfWork.FieldValues.SelectAsync(f => f.FieldId == fieldValue.FieldId && f.ItemId == fieldValue.ItemId && f.Value.ToLower() == fieldValue.Value.ToLower());
-        if(alreadyExistFieldValue is not null)
+        if (alreadyExistFieldValue is not null)
             throw new AlreadyExistException($"This field value is already exist");
 
         fieldValue.CreatedByUserId = HttpContextHelper.UserId;
@@ -79,7 +79,7 @@ public class FieldValueService(IUnitOfWork unitOfWork) : IFieldValueService
 
     public async ValueTask<IEnumerable<FieldValue>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
-        var fieldValues = unitOfWork.FieldValues.SelectAsQueryable(includes: ["Field", "Item" ]).OrderBy(filter);
+        var fieldValues = unitOfWork.FieldValues.SelectAsQueryable(includes: ["Field", "Item"]).OrderBy(filter);
 
         if (!string.IsNullOrWhiteSpace(search))
             fieldValues = fieldValues.Where(fv => fv.Value.ToLower().Contains(search.ToLower()));

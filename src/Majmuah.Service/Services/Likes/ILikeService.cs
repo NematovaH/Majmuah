@@ -1,5 +1,4 @@
 ﻿using Majmuah.Domain.Entities.Likes;
-using Majmuah.Service.Configurations;
 
 namespace Majmuah.Service.Services.Likes;
 

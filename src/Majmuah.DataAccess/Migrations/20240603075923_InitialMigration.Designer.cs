@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Majmuah.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240531170921_InitialMigration")]
+    [Migration("20240603075923_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -215,7 +215,7 @@ namespace Majmuah.DataAccess.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2052),
+                            CreatedAt = new DateTime(2024, 6, 3, 7, 59, 23, 308, DateTimeKind.Utc).AddTicks(9035),
                             CreatedByUserId = 0L,
                             IsDeleted = false,
                             Name = "Picture",
@@ -224,7 +224,7 @@ namespace Majmuah.DataAccess.Migrations
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2024, 5, 31, 17, 9, 20, 313, DateTimeKind.Utc).AddTicks(2064),
+                            CreatedAt = new DateTime(2024, 6, 3, 7, 59, 23, 308, DateTimeKind.Utc).AddTicks(9040),
                             CreatedByUserId = 0L,
                             IsDeleted = false,
                             Name = "Picture2",
@@ -254,6 +254,9 @@ namespace Majmuah.DataAccess.Migrations
 
                     b.Property<long?>("DeletedByUserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("FieldType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
