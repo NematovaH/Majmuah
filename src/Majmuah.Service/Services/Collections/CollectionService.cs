@@ -36,6 +36,10 @@ public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetServic
         var existCollection = await unitOfWork.Collections.SelectAsync(c => c.Id == id)
             ?? throw new NotFoundException($"Collection is not found with this ID={id}");
 
+        if (existCollection.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't edit collections you don't own");
+        }
         var alreadyExistCollection = await unitOfWork.Collections.SelectAsync(c => c.Name.ToLower() == collection.Name.ToLower());
         if (alreadyExistCollection is not null)
             throw new AlreadyExistException("This collection already exists");
@@ -52,6 +56,11 @@ public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetServic
     {
         var existCollection = await unitOfWork.Collections.SelectAsync(c => c.Id == id)
             ?? throw new NotFoundException($"Collection is not found with this ID={id}");
+
+        if (existCollection.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't edit collections you don't own");
+        }
 
         existCollection.DeletedByUserId = HttpContextHelper.UserId;
         await unitOfWork.Collections.DeleteAsync(existCollection);
@@ -82,8 +91,13 @@ public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetServic
         await unitOfWork.BeginTransactionAsync();
 
         var existCollection = await unitOfWork.Collections
-            .SelectAsync(c => c.Id == id && !c.IsDeleted, includes: ["User", "Category", "Asset", "Items", "Fields"])
+            .SelectAsync(c => c.Id == id, includes: ["User", "Category", "Asset", "Items", "Fields"])
             ?? throw new NotFoundException($"Collection is not found with this ID={id}");
+
+        if (existCollection.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't edit collections you don't own");
+        }
 
         var createdFile = await assetService.UploadAsync(file, FileType.Pictures);
 
@@ -101,17 +115,22 @@ public class CollectionService(IUnitOfWork unitOfWork, IAssetService assetServic
     {
         await unitOfWork.BeginTransactionAsync();
 
-        var existQuestion = await unitOfWork.Collections
-            .SelectAsync(question => question.Id == id && !question.IsDeleted, includes: ["File", "Module"])
-            ?? throw new NotFoundException($"Question is not found with this ID={id}");
+        var existCollection = await unitOfWork.Collections
+            .SelectAsync(c => c.Id == id, includes: ["User", "Category", "Asset", "Items", "Fields"])
+            ?? throw new NotFoundException($"Collection is not found with this ID={id}");
 
-        await assetService.DeleteAsync(Convert.ToInt64(existQuestion.AssetId));
+        if (existCollection.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't edit collections you don't own");
+        }
 
-        existQuestion.AssetId = null;
-        await unitOfWork.Collections.UpdateAsync(existQuestion);
+        await assetService.DeleteAsync(Convert.ToInt64(existCollection.AssetId));
+
+        existCollection.AssetId = null;
+        await unitOfWork.Collections.UpdateAsync(existCollection);
         await unitOfWork.SaveAsync();
         await unitOfWork.CommitTransactionAsync();
 
-        return existQuestion;
+        return existCollection;
     }
 }

@@ -54,7 +54,7 @@ public class CategoryService(IUnitOfWork unitOfWork) : ICategoryService
 
     public async ValueTask<Category> GetByIdAsync(long id)
     {
-        var existCategory = await unitOfWork.Categories.SelectAsync(c => c.Id == id)
+        var existCategory = await unitOfWork.Categories.SelectAsync(c => c.Id == id, includes: ["Collections"])
             ?? throw new NotFoundException($"Category is not found with this ID={id}");
 
         return existCategory;

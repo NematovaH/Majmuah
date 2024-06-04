@@ -10,8 +10,5 @@ public class UserUpdateModel
     public string Email { get; set; }
     public string Phone { get; set; }
     public DateTime DateOfBirth { get; set; }
-    [DefaultValue(false)]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-    public bool IsBlocked { get; set; }
 
 }

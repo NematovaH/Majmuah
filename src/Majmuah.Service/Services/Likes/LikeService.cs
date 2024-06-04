@@ -17,7 +17,7 @@ public class LikeService(IUnitOfWork unitOfWork) : ILikeService
 
         var existLike = await unitOfWork.Likes.SelectAsync(l => l.UserId == like.UserId && l.ItemId == like.ItemId)
             ?? throw new AlreadyExistException($"This like is already exist");
-
+        
         like.CreatedByUserId = HttpContextHelper.UserId;
         var createdLike = await unitOfWork.Likes.InsertAsync(like);
         createdLike.User = existUser;
@@ -32,6 +32,10 @@ public class LikeService(IUnitOfWork unitOfWork) : ILikeService
         var existLike = await unitOfWork.Likes.SelectAsync(l => l.Id == id)
             ?? throw new NotFoundException($"This like is not found with this ID={id}");
 
+        if (existLike.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't delete likes you don't create");
+        }
         existLike.DeletedByUserId = HttpContextHelper.UserId;
         await unitOfWork.Likes.DeleteAsync(existLike);
         await unitOfWork.SaveAsync();
