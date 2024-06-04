@@ -12,11 +12,6 @@ public class CommentUpdateModelValidator : AbstractValidator<CommentUpdateModel>
             .NotEmpty()
             .WithMessage("Content is required.");
 
-        RuleFor(x => x.Time)
-            .NotEmpty()
-            .LessThanOrEqualTo(DateTime.Now)
-            .WithMessage("Time must be a valid date and not in the future.");
-
         RuleFor(x => x.ItemId)
             .NotNull()
             .WithMessage("Item ID must be greater than 0.");
