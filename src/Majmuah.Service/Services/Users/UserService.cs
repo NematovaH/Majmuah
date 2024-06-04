@@ -17,7 +17,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
     {
         var existUser = await unitOfWork.Users.SelectAsync(u => u.Phone == user.Phone || u.Email == user.Email);
         if (existUser is not null)
-            throw new AlreadyExistException($"This user already exists with this phone={user.Phone}");
+            throw new AlreadyExistException($"This user already exists with this phone or email");
 
         user.UserRole = role;
         user.CreatedByUserId = HttpContextHelper.UserId;

@@ -14,7 +14,7 @@ public class TagService(IUnitOfWork unitOfWork) : ITagService
     {
         var existTag = await unitOfWork.Tags.SelectAsync(t => t.Name.ToLower() == tag.Name.ToLower());
         if (existTag is not null)
-            throw new AlreadyExistException($"Tag with this name alreadyn exists");
+            throw new AlreadyExistException($"Tag with this name already exists");
 
         tag.CreatedByUserId = HttpContextHelper.UserId;
         var createdTag = await unitOfWork.Tags.InsertAsync(tag);
@@ -55,7 +55,7 @@ public class TagService(IUnitOfWork unitOfWork) : ITagService
 
     public async ValueTask<Tag> GetByIdAsync(long id)
     {
-        var existTag = await unitOfWork.Tags.SelectAsync(t => t.Id == id)
+        var existTag = await unitOfWork.Tags.SelectAsync(t => t.Id == id, includes: ["Item", "User"])
             ?? throw new NotFoundException($"Tag is not found with this ID={id}");
 
         return existTag;
@@ -63,7 +63,7 @@ public class TagService(IUnitOfWork unitOfWork) : ITagService
 
     public async ValueTask<IEnumerable<Tag>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
-        var tags = unitOfWork.Tags.SelectAsQueryable().OrderBy(filter);
+        var tags = unitOfWork.Tags.SelectAsQueryable(includes: ["Item", "User"]).OrderBy(filter);
         if (!string.IsNullOrEmpty(search))
             tags = tags.Where(t => t.Name.Contains(search, StringComparison.OrdinalIgnoreCase));
 

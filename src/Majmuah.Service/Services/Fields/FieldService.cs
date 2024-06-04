@@ -64,7 +64,7 @@ public class FieldService(IUnitOfWork unitOfWork) : IFieldService
 
     public async ValueTask<Field> GetByIdAsync(long id)
     {
-        var existField = await unitOfWork.Fields.SelectAsync(f => f.Id == id)
+        var existField = await unitOfWork.Fields.SelectAsync(f => f.Id == id, includes: ["Collection"])
             ?? throw new NotFoundException($"Field is not found with this ID={id}");
 
         return existField;

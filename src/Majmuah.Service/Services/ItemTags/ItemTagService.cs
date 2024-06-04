@@ -63,7 +63,7 @@ public class ItemTagService(IUnitOfWork unitOfWork) : IItemTagService
 
     public async ValueTask<ItemTag> GetByIdAsync(long id)
     {
-        var existItemTag = await unitOfWork.ItemTags.SelectAsync(it => it.Id == id)
+        var existItemTag = await unitOfWork.ItemTags.SelectAsync(it => it.Id == id, includes: ["Item", "Tag"])
             ?? throw new NotFoundException($"ItemTag is not found with this ID={id}");
 
         return existItemTag;

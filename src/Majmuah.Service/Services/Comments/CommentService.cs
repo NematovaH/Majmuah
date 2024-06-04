@@ -30,14 +30,19 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
 
     public async ValueTask<Comment> UpdateAsync(long id, Comment comment)
     {
+        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id)
+            ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
+
         var existUser = await unitOfWork.Users.SelectAsync(user => user.Id == comment.UserId)
             ?? throw new NotFoundException($"User is not found with this Id = {comment.UserId}");
 
         var existItem = await unitOfWork.Items.SelectAsync(item => item.Id == comment.ItemId)
              ?? throw new NotFoundException($"Item is not found with this ID = {comment.ItemId}");
 
-        var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id)
-            ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
+        if (existComment.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't edit comments you don't write");
+        }
 
         existComment.Content = comment.Content;
         existComment.UpdatedByUserId = HttpContextHelper.UserId;
@@ -54,6 +59,11 @@ public class CommentService(IUnitOfWork unitOfWork) : ICommentService
     {
         var existComment = await unitOfWork.Comments.SelectAsync(c => c.Id == id)
             ?? throw new NotFoundException($"Comment is not found with this Id = {id}");
+
+        if (existComment.UserId != HttpContextHelper.UserId)
+        {
+            throw new UnauthorizedAccessException("You can't delete comments you don't write");
+        }
 
         existComment.DeletedByUserId = HttpContextHelper.UserId;
         await unitOfWork.Comments.DeleteAsync(existComment);

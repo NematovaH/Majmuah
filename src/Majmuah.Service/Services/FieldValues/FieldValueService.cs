@@ -71,7 +71,7 @@ public class FieldValueService(IUnitOfWork unitOfWork) : IFieldValueService
 
     public async ValueTask<FieldValue> GetByIdAsync(long id)
     {
-        var existFieldValue = await unitOfWork.FieldValues.SelectAsync(fv => fv.Id == id)
+        var existFieldValue = await unitOfWork.FieldValues.SelectAsync(fv => fv.Id == id, includes: ["Field", "Item"])
             ?? throw new NotFoundException($"FieldValue is not found with this ID={id}");
 
         return existFieldValue;
