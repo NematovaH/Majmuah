@@ -73,7 +73,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
 
     public async ValueTask<User> GetByIdAsync(long id)
     {
-        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id)
+        var existUser = await unitOfWork.Users.SelectAsync(expression: u => u.Id == id, includes: ["Collections","Likes","Comments"])
             ?? throw new NotFoundException($"User is not found with this ID={id}");
 
         return existUser;
@@ -82,7 +82,7 @@ public class UserService(IUnitOfWork unitOfWork, IMemoryCache memoryCache) : IUs
     public async ValueTask<IEnumerable<User>> GetAllAsync(PaginationParams @params, Filter filter, string search = null)
     {
         var users = unitOfWork.Users
-            .SelectAsQueryable(isTracked: false)
+            .SelectAsQueryable(includes: ["Collections", "Likes", "Comments"], isTracked: false)
             .OrderBy(filter);
 
         if (!string.IsNullOrEmpty(search))
